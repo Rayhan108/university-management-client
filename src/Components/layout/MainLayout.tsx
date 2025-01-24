@@ -4,33 +4,6 @@ import { adminSidebarItems } from "../../routes/admin.routes";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-// const items: MenuProps["items"] = [
-//   {
-//     key: "dashboard",
-//     label:<NavLink to="/admin">Dashboard</NavLink> ,
-//   },
-
-//   {
-//     key: "mnageUser",
-//     label: "Manage User",
-//     children: [
-//       {
-//         key: "createAdmin",
-//         label:<NavLink to="/admin/create-admin">Create Admin</NavLink>,
-//       },
-//       {
-//         key: "createFaculty",
-//         label:<NavLink to="/admin/create-faculty">Create Faculty</NavLink>,
-//       },
-//       {
-//         key: "createStudent",
-//         label:<NavLink to="/admin/create-student">Create Student</NavLink>,
-//       },
-     
-     
-//     ],
-//   },
-// ];
 
 const MainLayout = () => {
   return (
