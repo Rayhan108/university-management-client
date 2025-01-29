@@ -7,6 +7,8 @@ import { nameOptions } from "../../../constants/semister";
 import { monthOptions } from "../../../constants/global";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemisterSchema } from "../../../schemas/academicManagement.schemas";
+import { useCreateASemisterMutation } from "../../../redux/features/admin/academicManagement.api";
+import { toast } from "sonner";
 const { Title } = Typography;
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -14,7 +16,8 @@ const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
   label: String(currentYear + number),
 }));
 const CreateAcademicSemister = () => {
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const [ createASemister] = useCreateASemisterMutation();
+  const onSubmit: SubmitHandler<FieldValues> =async (data) => {
     // console.log(data);
     const name = nameOptions[Number(data.name) - 1].label;
     const semisterData = {
@@ -24,7 +27,15 @@ const CreateAcademicSemister = () => {
       startMonth:data.startMonth,
       endMonth:data.endMonth
     };
-    console.log(semisterData);
+    try{
+      console.log(semisterData);
+      const res = await createASemister(semisterData);
+console.log(res);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    }catch(err){
+toast.error("Something went wrong")
+    }
   };
 
   return (

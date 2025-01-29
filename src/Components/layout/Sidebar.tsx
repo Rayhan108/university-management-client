@@ -42,7 +42,8 @@ switch(user!.role){
             alignItems: "center",
           }}
         >
-          <h1>PH University</h1>
+          {/* NextGen Science and Technology University */}
+          <h1>NGST University</h1>
         </div>
         <Menu
           theme="dark"
