@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemisterSchema } from "../../../schemas/academicManagement.schemas";
 import { useCreateASemisterMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
+import { TResponse } from "../../../types/global";
 const { Title } = Typography;
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -19,6 +20,7 @@ const CreateAcademicSemister = () => {
   const [ createASemister] = useCreateASemisterMutation();
   const onSubmit: SubmitHandler<FieldValues> =async (data) => {
     // console.log(data);
+    const toastId = toast.loading("Semister Creating...")
     const name = nameOptions[Number(data.name) - 1].label;
     const semisterData = {
       name,
@@ -29,12 +31,16 @@ const CreateAcademicSemister = () => {
     };
     try{
       console.log(semisterData);
-      const res = await createASemister(semisterData);
+      const res = await createASemister(semisterData) as TResponse;
 console.log(res);
-
+if(res?.error){
+  toast.error(res?.error?.data?.message,{id:toastId})
+}else{
+  toast.success("Semister Created",{id:toastId})
+}
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     }catch(err){
-toast.error("Something went wrong")
+toast.error("Something went wrong",{id:toastId})
     }
   };
 
