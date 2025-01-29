@@ -8,14 +8,17 @@ const CreateAcademicSemister = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   };
+  const nameOptions=[
+    {value:'01',label:'Autumn'},
+    {value:'02',label:'Summar'},
+    {value:'03',label:'Fall'}
+  ]
   return (
  <Flex justify="center" align="middle">
      <Col span={6}>
     <PHForm onSubmit={onSubmit}>
-      {/* <PHInput type="text" name="name" label="name" />
-      <PHInput type="date" name="year" label="year" /> */}
-      <PHSelect label="name"/>
-      <PHSelect label="year"/>
+      <PHSelect label="Name" name="name" options={nameOptions}/>
+      <PHSelect label="Year" name="year"/>
       <Button htmlType="submit">Submit</Button>
     </PHForm>
   </Col>
