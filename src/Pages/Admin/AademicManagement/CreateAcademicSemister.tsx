@@ -10,6 +10,7 @@ import { academicSemisterSchema } from "../../../schemas/academicManagement.sche
 import { useCreateASemisterMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
 import { TResponse } from "../../../types/global";
+import { TAcademicSemester } from "../../../types/academicManagement.type";
 const { Title } = Typography;
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -31,7 +32,7 @@ const CreateAcademicSemister = () => {
     };
     try{
       console.log(semisterData);
-      const res = await createASemister(semisterData) as TResponse;
+      const res = await createASemister(semisterData) as TResponse<TAcademicSemester[]>
 console.log(res);
 if(res?.error){
   toast.error(res?.error?.data?.message,{id:toastId})

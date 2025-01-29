@@ -10,6 +10,7 @@ interface DataType {
 
 const AcademicSemister = () => {
     const {data:semisterData}=useGetAllSemistersQuery(undefined);
+    
     const tableData = semisterData?.data?.map(
       ({ _id, name, startMonth, endMonth, year }) => ({
         key: _id,
