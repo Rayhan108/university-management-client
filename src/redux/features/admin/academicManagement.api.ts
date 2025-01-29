@@ -1,5 +1,5 @@
 
-import { TResponseRedux } from "../../../types";
+import { TQueryParam, TResponseRedux } from "../../../types";
 import { TAcademicSemester } from "../../../types/academicManagement.type";
 import { baseApi } from "../../api/baseApi";
 
@@ -13,10 +13,20 @@ const academicManagementApi = baseApi.injectEndpoints({
       }),
     }),
     getAllSemisters: builder.query({
-      query: () => ({
-        url: "/academic-semisters",
-        method: "GET",
-      }),
+      query: (args) => {
+        const params = new URLSearchParams()
+      
+        if (args) {
+          args.forEach((item: TQueryParam) => {
+            params.append(item.name, item.value as string);
+          });
+        }
+  return {
+    url: "/academic-semisters",
+    method: "GET",
+    params:params
+  }
+      },
       transformResponse: (response : TResponseRedux<TAcademicSemester[]>) => {
         // console.log("inside redux", response);
         return {

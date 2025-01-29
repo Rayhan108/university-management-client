@@ -1,15 +1,16 @@
 import { Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllSemistersQuery } from "../../../redux/features/admin/academicManagement.api";
+import { TAcademicSemester } from "../../../types/academicManagement.type";
+import { useState } from "react";
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+export type TTableData = Pick<
+  TAcademicSemester,
+  'name' | 'year' | 'startMonth' | 'endMonth'
+>;
 
 const AcademicSemister = () => {
-    const {data:semisterData}=useGetAllSemistersQuery(undefined);
+  const [params,setParams]=useState([]);
+    const {data:semisterData}=useGetAllSemistersQuery(params);
     
     const tableData = semisterData?.data?.map(
       ({ _id, name, startMonth, endMonth, year }) => ({
@@ -21,58 +22,57 @@ const AcademicSemister = () => {
       })
     );
 
-    const columns: TableColumnsType<DataType> = [
+    const columns: TableColumnsType<TTableData> = [
       {
         title: 'Name',
+        key:'name',
         dataIndex: 'name',
         showSorterTooltip: { target: 'full-header' },
         filters: [
           {
-            text: 'Joe',
-            value: 'Joe',
+            text: 'Autumn',
+            value: 'Autumn',
           },
           {
-            text: 'Jim',
-            value: 'Jim',
+            text: 'Summar',
+            value: 'Summar',
           },
           {
-            text: 'Submenu',
-            value: 'Submenu',
-            children: [
-              {
-                text: 'Green',
-                value: 'Green',
-              },
-              {
-                text: 'Black',
-                value: 'Black',
-              },
-            ],
+            text: 'Fall',
+            value: 'Fall',
           },
+         
         ],
    
       },
       {
         title: 'Year',
+        key:'year',
         dataIndex: 'year',
         
       },
       {
         title: 'Start Month',
+        key:'startMonth',
         dataIndex: 'startMonth',
       },
       {
         title: 'End Month',
+        key:'endMonth',
         dataIndex: 'endMonth',
       },
     ];
 
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-      console.log('params', pagination, filters, sorter, extra);
+    const onChange: TableProps<TTableData>['onChange'] = (pagination, filters, sorter, extra) => {
+      if(extra.action==='filter'){
+        const queryParams = []
+        filters.name?.forEach((item)=>(  queryParams.push({name:"name",value:item})))
+setParams(queryParams)
+      }
     };
         
     return (
-      <Table<DataType>
+      <Table<TTableData>
       columns={columns}
       dataSource={tableData}
       onChange={onChange}
