@@ -4,8 +4,9 @@ type TPHInputProps={
     type:string;
     name:string;
     label?:string;
+     placeholder?:string;
 }
-const PHInput = ({ type, name, label }:TPHInputProps) => {
+const PHInput = ({ type, name, label, placeholder }:TPHInputProps) => {
 //   const { register } = useFormContext();
   return (
     <div style={{marginBottom:"20px"}}>
@@ -15,7 +16,7 @@ const PHInput = ({ type, name, label }:TPHInputProps) => {
       render={({field})=>(
         <Form.Item label={label} >
         {/* {...register(name)} */}
-          <Input {...field} type={type} id={name} ></Input>
+          <Input {...field} type={type} id={name} size={"large"} placeholder={placeholder}/>
         </Form.Item>
       )}
       />

@@ -1,4 +1,4 @@
-import { Button, Row } from "antd";
+import { Button, Row, Col, Card, Typography } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
@@ -9,18 +9,15 @@ import { toast } from "sonner";
 import PHForm from "../Components/Form/PHForm";
 import PHInput from "../Components/Form/PHInput";
 
+const { Title } = Typography;
+
 const Login = () => {
   const navigate = useNavigate();
-  // const {register,handleSubmit}= useForm();
-
   const dispatch = useAppDispatch();
   const [login] = useLoginMutation();
-// const defaultValues = {
-//   userId:"A-0001",
-//   password:"admin12345"
-// }
+
   const onSubmit = async (data: FieldValues) => {
-    const toastId = toast.loading("Loggin in processes");
+    const toastId = toast.loading("Logging in...");
     try {
       const userInfo = {
         id: data.UserId,
@@ -28,24 +25,41 @@ const Login = () => {
       };
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
-      console.log("res=>", res);
       dispatch(setUser({ user: user, token: res.data.accessToken }));
-      toast.success("Logged in", { id: toastId, duration: 2000 });
+      toast.success("Logged in successfully", { id: toastId, duration: 2000 });
       navigate(`/${user.role}/dashboard`);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      toast.error("something went wrong", { id: toastId, duration: 2000 });
+      toast.error("Something went wrong", { id: toastId, duration: 2000 });
     }
   };
+
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <PHForm onSubmit={onSubmit}>
-        <PHInput type="text" name="UserId" label="ID" />
-
-        <PHInput type="text" name="password" label="Password" />
-
-        <Button htmlType="submit">Login</Button>
-      </PHForm>
+    <Row justify="center" align="middle" style={{ minHeight: "100vh", backgroundColor: "#f0f2f5" }}>
+      <Col xs={22} sm={18} md={14} lg={10} xl={8}>
+        <Card
+          style={{
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            borderRadius: "8px",
+          }}
+        >
+          <Title level={2} style={{ textAlign: "center", marginBottom: "24px" }}>
+            Login
+          </Title>
+          <PHForm onSubmit={onSubmit}>
+            <PHInput type="text" name="UserId" label="ID"  placeholder="Enter your name" />
+            <PHInput type="password" name="password" label="Password"  placeholder="Enter your Password" />
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              style={{ marginTop: "16px" }}
+            >
+              Login
+            </Button>
+          </PHForm>
+        </Card>
+      </Col>
     </Row>
   );
 };
