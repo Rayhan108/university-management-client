@@ -21,19 +21,20 @@ import {
     const [page, setPage] = useState(1);
     const {
       data: studentData,
-      isLoading,
+      // isLoading,
       isFetching,
     } = useGetAllStudentsQuery([
+      // { name: 'limit', value: 3 },
       { name: 'page', value: page },
       { name: 'sort', value: 'id' },
       ...params,
     ]);
   
-    console.log({ isLoading, isFetching });
+    // console.log({ isLoading, isFetching });
   
-    const metaData = studentData?.meta;
-  
-    const tableData = studentData?.data?.map(
+    const metaData = studentData?.data?.meta;
+  // console.log(studentData?.data?.meta);
+    const tableData = studentData?.data?.result?.map(
       ({ _id, fullName, id, email, contactNo }) => ({
         key: _id,
         fullName,
@@ -69,7 +70,7 @@ import {
         title: 'Action',
         key: 'x',
         render: (item) => {
-          console.log(item);
+          // console.log(item);
           return (
             <Space>
               <Link to={`/admin/student-data/${item.key}`}>
