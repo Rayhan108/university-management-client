@@ -4,12 +4,12 @@ import { Controller } from "react-hook-form";
 type TSelectProps = {
   label: string;
   name: string;
-  options: { value: string; label: string; disabled?: boolean }[];
+  options: { value: string; label: string; disabled?: boolean }[] | undefined;
    placeholder?:string;
-
+disabled?:boolean;
 };
 
-const PHSelect = ({ label, name,options, placeholder }: TSelectProps) => {
+const PHSelect = ({ label, name,options, placeholder,disabled }: TSelectProps) => {
   return (
     <Controller
       name={name}
@@ -21,7 +21,7 @@ const PHSelect = ({ label, name,options, placeholder }: TSelectProps) => {
             options={options}
             size={"large"}
             placeholder={placeholder}
-           
+           disabled={disabled}
           />
         {error && <small style={{color:"red",marginTop:"3px"}}>{error.message}</small>}
         </Form.Item>

@@ -15,8 +15,8 @@ export interface TStudent {
   permanentAddress: string;
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
-  profileImg: string;
-  admissionSemester: TAcademicSemester;
+  profileImg?: string;
+  admissionSemister: TAcademicSemester;
   isDeleted: boolean;
   academicDepartment: TAcademicDepartment;
   academicFaculty: TAcademicFaculty;
