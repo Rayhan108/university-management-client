@@ -44,8 +44,7 @@ switch(user!.role){
         >
           {/* NextGen Science and Technology University */}
           <h1>
-            {/* NGST */}
-            PH University</h1>
+            NGST University</h1>
         </div>
         <Menu
           theme="dark"
